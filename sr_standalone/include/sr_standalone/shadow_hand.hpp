@@ -73,7 +73,7 @@ public:
    *
    * @return true if success.
    */
-  bool get_control_type(ControlType & control_type);
+  bool get_control_type(ControlType* control_type);
 
   /**
    * Set the control type to be used on the hand.
@@ -155,7 +155,7 @@ private:
   /*
    * Pimpl idiom for hiding implementation details in the header file
    */
-  class SrRosWrapper; // fwd declaration
+  class SrRosWrapper;  // fwd declaration
   SrRosWrapper *wrapper_;
 
   ShadowHand(const ShadowHand& other)

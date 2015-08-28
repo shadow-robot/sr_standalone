@@ -60,7 +60,7 @@ void ShadowHand::SrRosWrapper::spin(void)
   }
 }
 
-bool ShadowHand::SrRosWrapper::get_control_type(ControlType &current_ctrl_type)
+bool ShadowHand::SrRosWrapper::get_control_type(ControlType* current_ctrl_type)
 {
   spin();
   sr_robot_msgs::ChangeControlType change_ctrl_type;
@@ -69,12 +69,12 @@ bool ShadowHand::SrRosWrapper::get_control_type(ControlType &current_ctrl_type)
   {
     if (change_ctrl_type.response.result.control_type == sr_robot_msgs::ControlType::PWM)
     {
-      current_ctrl_type = POSITION_PWM;
+      *current_ctrl_type = POSITION_PWM;
       return true;
     }
     else if (change_ctrl_type.response.result.control_type == sr_robot_msgs::ControlType::FORCE)
     {
-      current_ctrl_type = EFFORT_TORQUE;
+      *current_ctrl_type = EFFORT_TORQUE;
       return true;
     }
   }
@@ -104,7 +104,7 @@ bool ShadowHand::SrRosWrapper::set_control_type(const ControlType &new_ctrl_type
   sleep(3);
 
   ControlType current_ctrl_type;
-  if (get_control_type(current_ctrl_type) && current_ctrl_type == new_ctrl_type)
+  if (get_control_type(&current_ctrl_type) && current_ctrl_type == new_ctrl_type)
   {
     pr2_mechanism_msgs::SwitchController cswitch;
     cswitch.request.strictness = pr2_mechanism_msgs::SwitchController::Request::STRICT;

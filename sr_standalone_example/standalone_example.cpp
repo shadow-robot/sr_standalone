@@ -16,7 +16,7 @@ int main(int argc, char** argv)
     cout << "Failed to set control type to POSITION_PWM.\n";
 
   ControlType curr_ctrl_type;
-  if (!hand.get_control_type(curr_ctrl_type))
+  if (!hand.get_control_type(&curr_ctrl_type))
   {
     cout << "Failed to get control type.\n";
     return -1;
