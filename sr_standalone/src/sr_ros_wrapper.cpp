@@ -39,12 +39,12 @@ static const size_t JOINTS_WITH_STATE = 20;
 namespace shadow_robot_standalone
 {
 
-static const char ctrl_joints[JOINTS_WITH_STATE] = {"ffj0", "ffj3", "ffj4",
-                                                    "lfj0", "lfj3", "lfj4", "lfj5",
-                                                    "mfj0", "mfj3", "mfj4",
-                                                    "rfj0", "rfj3", "rfj4",
-                                                    "thj1", "thj2", "thj3", "thj4", "thj5",
-                                                    "wrj1", "wrj2"};
+static const char* ctrl_joints[JOINTS_WITH_STATE] = {"ffj0", "ffj3", "ffj4",
+                                                     "lfj0", "lfj3", "lfj4", "lfj5",
+                                                     "mfj0", "mfj3", "mfj4",
+                                                     "rfj0", "rfj3", "rfj4",
+                                                     "thj1", "thj2", "thj3", "thj4", "thj5",
+                                                     "wrj1", "wrj2"};
 
 ShadowHand::SrRosWrapper::SrRosWrapper()
 {
