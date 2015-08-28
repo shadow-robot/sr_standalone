@@ -1,3 +1,25 @@
+/**
+ * @file   shadow_hand.hpp
+ * @author Ugo Cupcic <ugo@shadowrobot.com>
+ *
+*
+* Copyright 2015 Shadow Robot Company Ltd.
+*
+* This program is free software: you can redistribute it and/or modify it
+* under the terms of the GNU General Public License as published by the Free
+* Software Foundation, either version 2 of the License, or (at your option)
+* any later version.
+*
+* This program is distributed in the hope that it will be useful, but WITHOUT
+* ANY WARRANTY; without even the implied warranty of MERCHANTABILITY or
+* FITNESS FOR A PARTICULAR PURPOSE.  See the GNU General Public License for
+* more details.
+*
+* You should have received a copy of the GNU General Public License along
+* with this program.  If not, see <http://www.gnu.org/licenses/>.
+*
+*/
+
 #pragma once
 
 #include <string>
@@ -51,7 +73,7 @@ public:
    *
    * @return true if success.
    */
-  bool get_control_type(ControlType & control_type);
+  bool get_control_type(ControlType* control_type);
 
   /**
    * Set the control type to be used on the hand.
@@ -133,12 +155,16 @@ private:
   /*
    * Pimpl idiom for hiding implementation details in the header file
    */
-  class SrRosWrapper; // fwd declaration
+  class SrRosWrapper;  // fwd declaration
   SrRosWrapper *wrapper_;
-  ShadowHand(const ShadowHand& other) {
+
+  ShadowHand(const ShadowHand& other)
+  {
   }
-  ShadowHand& operator=(const ShadowHand& other) {
+
+  ShadowHand& operator=(const ShadowHand& other)
+  {
   }
 };
 
-} // namespace
+}  // namespace shadow_robot_standalone

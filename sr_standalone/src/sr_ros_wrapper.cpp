@@ -1,23 +1,50 @@
+/**
+ * @file   sr_ros_wrapper.cpp
+ * @author Ugo Cupcic <ugo@shadowrobot.com>
+ *
+*
+* Copyright 2015 Shadow Robot Company Ltd.
+*
+* This program is free software: you can redistribute it and/or modify it
+* under the terms of the GNU General Public License as published by the Free
+* Software Foundation, either version 2 of the License, or (at your option)
+* any later version.
+*
+* This program is distributed in the hope that it will be useful, but WITHOUT
+* ANY WARRANTY; without even the implied warranty of MERCHANTABILITY or
+* FITNESS FOR A PARTICULAR PURPOSE.  See the GNU General Public License for
+* more details.
+*
+* You should have received a copy of the GNU General Public License along
+* with this program.  If not, see <http://www.gnu.org/licenses/>.
+*
+*/
+
 #include "sr_standalone/sr_ros_wrapper.hpp"
 #include <std_msgs/Float64.h>
 #include <pr2_mechanism_msgs/LoadController.h>
 #include <pr2_mechanism_msgs/SwitchController.h>
 #include <boost/algorithm/string/case_conv.hpp>
-#include <algorithm>
 
-using namespace std;
+#include <algorithm>
+#include <string>
+#include <vector>
+
+using std::vector;
+using std::string;
+
 using boost::algorithm::to_upper_copy;
 static const size_t JOINTS_WITH_STATE = 20;
 
 namespace shadow_robot_standalone
 {
 
-static const string ctrl_joints[JOINTS_WITH_STATE] = {"ffj0", "ffj3", "ffj4",
-                                                      "lfj0", "lfj3", "lfj4", "lfj5",
-                                                      "mfj0", "mfj3", "mfj4",
-                                                      "rfj0", "rfj3", "rfj4",
-                                                      "thj1", "thj2", "thj3", "thj4", "thj5",
-                                                      "wrj1", "wrj2"};
+static const char* ctrl_joints[JOINTS_WITH_STATE] = {"ffj0", "ffj3", "ffj4",
+                                                     "lfj0", "lfj3", "lfj4", "lfj5",
+                                                     "mfj0", "mfj3", "mfj4",
+                                                     "rfj0", "rfj3", "rfj4",
+                                                     "thj1", "thj2", "thj3", "thj4", "thj5",
+                                                     "wrj1", "wrj2"};
 
 ShadowHand::SrRosWrapper::SrRosWrapper()
 {
@@ -60,7 +87,7 @@ void ShadowHand::SrRosWrapper::spin(void)
   }
 }
 
-bool ShadowHand::SrRosWrapper::get_control_type(ControlType &current_ctrl_type)
+bool ShadowHand::SrRosWrapper::get_control_type(ControlType* current_ctrl_type)
 {
   spin();
   sr_robot_msgs::ChangeControlType change_ctrl_type;
@@ -69,12 +96,12 @@ bool ShadowHand::SrRosWrapper::get_control_type(ControlType &current_ctrl_type)
   {
     if (change_ctrl_type.response.result.control_type == sr_robot_msgs::ControlType::PWM)
     {
-      current_ctrl_type = POSITION_PWM;
+      *current_ctrl_type = POSITION_PWM;
       return true;
     }
     else if (change_ctrl_type.response.result.control_type == sr_robot_msgs::ControlType::FORCE)
     {
-      current_ctrl_type = EFFORT_TORQUE;
+      *current_ctrl_type = EFFORT_TORQUE;
       return true;
     }
   }
@@ -104,7 +131,7 @@ bool ShadowHand::SrRosWrapper::set_control_type(const ControlType &new_ctrl_type
   sleep(3);
 
   ControlType current_ctrl_type;
-  if (get_control_type(current_ctrl_type) && current_ctrl_type == new_ctrl_type)
+  if (get_control_type(&current_ctrl_type) && current_ctrl_type == new_ctrl_type)
   {
     pr2_mechanism_msgs::SwitchController cswitch;
     cswitch.request.strictness = pr2_mechanism_msgs::SwitchController::Request::STRICT;
@@ -145,7 +172,7 @@ void ShadowHand::SrRosWrapper::send_position(const string &joint_name, double ta
 
   sr_robot_msgs::joint joint_command;
   joint_command.joint_name = joint_name;
-  joint_command.joint_target = target * (180 / M_PI); // convert to degrees
+  joint_command.joint_target = target * (180 / M_PI);  // convert to degrees
   hand_commander_->sendCommands(vector<sr_robot_msgs::joint>(1, joint_command));
   spin();
 }
@@ -166,7 +193,7 @@ void ShadowHand::SrRosWrapper::send_all_positions(const vector<double> &targets)
   while (pit != torque_pubs_.end())
   {
     joint_command.joint_name = pit->first;
-    joint_command.joint_target = *tit * (180 / M_PI); // convert to degrees
+    joint_command.joint_target = *tit * (180 / M_PI);  // convert to degrees
     joint_commands.push_back(joint_command);
 
     ++pit;
@@ -220,11 +247,11 @@ void ShadowHand::SrRosWrapper::joint_state_cb(const sensor_msgs::JointStateConst
 
 void ShadowHand::SrRosWrapper::tactile_cb(const sr_robot_msgs::BiotacAllConstPtr& msg)
 {
-  //initialise the vector to the correct size if empty (first time)
+  // initialise the vector to the correct size if empty (first time)
   if (tactiles_.empty())
     tactiles_.resize(msg->tactiles.size());
 
-  //fills the data with the incoming biotacs
+  // fills the data with the incoming biotacs
   for (size_t i = 0; i < tactiles_.size(); ++i)
   {
     tactiles_[i].pac0 = msg->tactiles[i].pac0;
@@ -248,4 +275,4 @@ void ShadowHand::SrRosWrapper::tactile_cb(const sr_robot_msgs::BiotacAllConstPtr
   }
 }
 
-} // namespace
+}  // namespace shadow_robot_standalone
