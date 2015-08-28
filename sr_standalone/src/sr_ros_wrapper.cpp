@@ -1,9 +1,34 @@
+/**
+ * @file   sr_ros_wrapper.cpp
+ * @author Ugo Cupcic <ugo@shadowrobot.com>
+ *
+*
+* Copyright 2015 Shadow Robot Company Ltd.
+*
+* This program is free software: you can redistribute it and/or modify it
+* under the terms of the GNU General Public License as published by the Free
+* Software Foundation, either version 2 of the License, or (at your option)
+* any later version.
+*
+* This program is distributed in the hope that it will be useful, but WITHOUT
+* ANY WARRANTY; without even the implied warranty of MERCHANTABILITY or
+* FITNESS FOR A PARTICULAR PURPOSE.  See the GNU General Public License for
+* more details.
+*
+* You should have received a copy of the GNU General Public License along
+* with this program.  If not, see <http://www.gnu.org/licenses/>.
+*
+*/
+
 #include "sr_standalone/sr_ros_wrapper.hpp"
 #include <std_msgs/Float64.h>
 #include <pr2_mechanism_msgs/LoadController.h>
 #include <pr2_mechanism_msgs/SwitchController.h>
 #include <boost/algorithm/string/case_conv.hpp>
+
 #include <algorithm>
+#include <string>
+#include <vector>
 
 using namespace std;
 using boost::algorithm::to_upper_copy;
@@ -145,7 +170,7 @@ void ShadowHand::SrRosWrapper::send_position(const string &joint_name, double ta
 
   sr_robot_msgs::joint joint_command;
   joint_command.joint_name = joint_name;
-  joint_command.joint_target = target * (180 / M_PI); // convert to degrees
+  joint_command.joint_target = target * (180 / M_PI);  // convert to degrees
   hand_commander_->sendCommands(vector<sr_robot_msgs::joint>(1, joint_command));
   spin();
 }
@@ -166,7 +191,7 @@ void ShadowHand::SrRosWrapper::send_all_positions(const vector<double> &targets)
   while (pit != torque_pubs_.end())
   {
     joint_command.joint_name = pit->first;
-    joint_command.joint_target = *tit * (180 / M_PI); // convert to degrees
+    joint_command.joint_target = *tit * (180 / M_PI);  // convert to degrees
     joint_commands.push_back(joint_command);
 
     ++pit;
@@ -220,11 +245,11 @@ void ShadowHand::SrRosWrapper::joint_state_cb(const sensor_msgs::JointStateConst
 
 void ShadowHand::SrRosWrapper::tactile_cb(const sr_robot_msgs::BiotacAllConstPtr& msg)
 {
-  //initialise the vector to the correct size if empty (first time)
+  // initialise the vector to the correct size if empty (first time)
   if (tactiles_.empty())
     tactiles_.resize(msg->tactiles.size());
 
-  //fills the data with the incoming biotacs
+  // fills the data with the incoming biotacs
   for (size_t i = 0; i < tactiles_.size(); ++i)
   {
     tactiles_[i].pac0 = msg->tactiles[i].pac0;

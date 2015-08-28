@@ -20,10 +20,14 @@
 *
 */
 
+#include <vector>
+#include <string>
+
 #include "sr_standalone/shadow_hand.hpp"
 #include "sr_standalone/sr_ros_wrapper.hpp"
 
-using namespace std;
+using std::vector;
+using std::string;
 
 namespace shadow_robot_standalone
 {
@@ -102,4 +106,4 @@ vector<string> ShadowHand::get_controlled_joints() const
   return controlled_joints;
 }
 
-} // namespace
+}  // namespace shadow_robot_standalone
