@@ -22,11 +22,13 @@
 
 #include <vector>
 #include <string>
+#include <map>
 
 #include "sr_standalone/shadow_hand.hpp"
 #include "sr_standalone/sr_ros_wrapper.hpp"
 
 using std::vector;
+using std::map;
 using std::string;
 
 namespace shadow_robot_standalone
