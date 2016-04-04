@@ -73,7 +73,7 @@ ShadowHand::SrRosWrapper::SrRosWrapper()
     eff_to_load.request.name = string("/sh_") + ctrl_joints[i] + "_effort_controller";
     ros::service::call("pr2_controller_manager/load_controller", eff_to_load);
 
-    torque_pubs_[to_upper_copy(ctrl_joints[i])] =
+    torque_pubs_[to_upper_copy(static_cast<std::string>(ctrl_joints[i]))] =
       nh_->advertise<std_msgs::Float64>(eff_to_load.request.name + "/command", 1, true);
   }
 }
@@ -138,8 +138,8 @@ bool ShadowHand::SrRosWrapper::set_control_type(const ControlType &new_ctrl_type
 
     for (size_t i = 0; i < JOINTS_WITH_STATE; ++i)
     {
-      string pos_ctrl_name = "/sh_" + ctrl_joints[i] + "_position_controller";
-      string eff_ctrl_name = "/sh_" + ctrl_joints[i] + "_effort_controller";
+      string pos_ctrl_name = "/sh_" + static_cast<string>(ctrl_joints[i]) + "_position_controller";
+      string eff_ctrl_name = "/sh_" + static_cast<string>(ctrl_joints[i]) + "_effort_controller";
       if (current_ctrl_type == POSITION_PWM)
       {
         cswitch.request.start_controllers.push_back(pos_ctrl_name);
@@ -261,7 +261,7 @@ void ShadowHand::SrRosWrapper::tactile_cb(const sr_robot_msgs::BiotacAllConstPtr
     tactiles_[i].tac = msg->tactiles[i].tac;
     tactiles_[i].tdc = msg->tactiles[i].tdc;
 
-    if (Tactile::no_of_electrodes == msg->tactiles[i].electrodes.size())
+    if (Tactile::NO_OF_ELECTRODES == msg->tactiles[i].electrodes.size())
     {
       for (size_t elec_i = 0; elec_i < msg->tactiles[i].electrodes.size(); ++elec_i)
         tactiles_[i].electrodes[elec_i] = msg->tactiles[i].electrodes[elec_i];
@@ -270,7 +270,7 @@ void ShadowHand::SrRosWrapper::tactile_cb(const sr_robot_msgs::BiotacAllConstPtr
     {
       ROS_ERROR_STREAM("Verify the size of msg->tactiles[i].electrodes. \n"
                        << "It is " << msg->tactiles[i].electrodes.size()
-                       << ", but it should be " << Tactile::no_of_electrodes << ".");
+                       << ", but it should be " << Tactile::NO_OF_ELECTRODES << ".");
     }
   }
 }
