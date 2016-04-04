@@ -73,7 +73,7 @@ ShadowHand::SrRosWrapper::SrRosWrapper()
     eff_to_load.request.name = string("/sh_") + ctrl_joints[i] + "_effort_controller";
     ros::service::call("pr2_controller_manager/load_controller", eff_to_load);
 
-    torque_pubs_[to_upper_copy(ctrl_joints[i])] =
+    torque_pubs_[to_upper_copy(static_cast<std::string>(ctrl_joints[i]))] =
       nh_->advertise<std_msgs::Float64>(eff_to_load.request.name + "/command", 1, true);
   }
 }
@@ -138,8 +138,8 @@ bool ShadowHand::SrRosWrapper::set_control_type(const ControlType &new_ctrl_type
 
     for (size_t i = 0; i < JOINTS_WITH_STATE; ++i)
     {
-      string pos_ctrl_name = "/sh_" + ctrl_joints[i] + "_position_controller";
-      string eff_ctrl_name = "/sh_" + ctrl_joints[i] + "_effort_controller";
+      string pos_ctrl_name = "/sh_" + static_cast<string>(ctrl_joints[i]) + "_position_controller";
+      string eff_ctrl_name = "/sh_" + static_cast<string>(ctrl_joints[i]) + "_effort_controller";
       if (current_ctrl_type == POSITION_PWM)
       {
         cswitch.request.start_controllers.push_back(pos_ctrl_name);
