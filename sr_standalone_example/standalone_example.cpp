@@ -62,7 +62,7 @@ int main(int argc, char** argv)
         << tactiles[i].pdc << ", "
         << tactiles[i].tac << ", "
         << tactiles[i].tdc << "\n";
-      for (size_t elec_i = 0; elec_i < Tactile::no_of_electrodes; ++elec_i)
+      for (size_t elec_i = 0; elec_i < Tactile::NO_OF_ELECTRODES; ++elec_i)
         cout << tactiles[i].electrodes[elec_i] << ", ";
       cout << "\n";
     }
