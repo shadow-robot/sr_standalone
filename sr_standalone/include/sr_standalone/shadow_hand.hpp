@@ -49,8 +49,8 @@ struct Tactile
   int tac;
   int tdc;
 
-  static const int no_of_electrodes = 19;
-  int electrodes[no_of_electrodes];
+  static const int NO_OF_ELECTRODES = 19;
+  int electrodes[NO_OF_ELECTRODES];
 };
 
 enum ControlType
