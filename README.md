@@ -1,9 +1,8 @@
-|     Service       |  Status  |
-| ----------------- | -------- |
-| Documentation     | [![Documentation Status](https://readthedocs.org/projects/shadow-robot-standalone-packages/badge/?version=latest)](http://shadow-robot-standalone-packages.readthedocs.org) |
-| Code style checks | [![Circle CI](https://circleci.com/gh/shadow-robot/sr_standalone.svg?style=shield)](https://circleci.com/gh/shadow-robot/sr_standalone) |
-| Unit tests        | [![Build Status](https://img.shields.io/shippable/55e058e01895ca44741098cb.svg)](https://app.shippable.com/projects/55e058e01895ca44741098cb) |
-| Install tests     | [![Build Status](https://semaphoreci.com/api/v1/projects/6c5c827f-6f34-43c2-9289-4df22a04d35e/525306/shields_badge.svg)](https://semaphoreci.com/shadow-robot/sr_standalone) |
+Check | Status
+---|---
+Build|[<img src="https://codebuild.eu-west-2.amazonaws.com/badges?uuid=eyJlbmNyeXB0ZWREYXRhIjoiVHVaekxUWmMvNTZaQ01jTXVWR3NWeXV2aWpHemJnL3V5NS9kV2drSWhHQjRvSWpoOXJURWZoeHFucld0SythSFVNNm9MQTJxSlhNMDNnWE0yNkRtY0tNPSIsIml2UGFyYW1ldGVyU3BlYyI6ImQ3YXFEakkyR3VOQ21jTGIiLCJtYXRlcmlhbFNldFNlcmlhbCI6MX0%3D&branch=melodic-devel"/>](https://eu-west-2.console.aws.amazon.com/codesuite/codebuild/projects/auto_sr_standalone_melodic-devel_install_check/)
+Style|[<img src="https://codebuild.eu-west-2.amazonaws.com/badges?uuid=eyJlbmNyeXB0ZWREYXRhIjoidFNkWDN6Zm90QUEzREJnN05sU2t1RGlianRIaGtIQlJsMlF5ay9iNkF5eSt3YkZtbm9RTzk5SDVkdWtNVkFObUE0YStvaUhaQzd0RjMxNStkQUdtVWVNPSIsIml2UGFyYW1ldGVyU3BlYyI6Impkem16UmtxQ29zZ3VuK0wiLCJtYXRlcmlhbFNldFNlcmlhbCI6MX0%3D&branch=melodic-devel"/>](https://eu-west-2.console.aws.amazon.com/codesuite/codebuild/projects/auto_sr_standalone_melodic-devel_style_check/)
+Code Coverage|[<img src="https://codebuild.eu-west-2.amazonaws.com/badges?uuid=eyJlbmNyeXB0ZWREYXRhIjoiZkhrTG5aVHFHcWJBaHRPNExUU0VtSFJNWDNnSGMxa3d6Q1AxK2dNeFBQa2pBRTlEeE03cFFzNlZpNjMxK0l1UGNHbmJKSXVUcCtuVXNibnRmQXdtOVdrPSIsIml2UGFyYW1ldGVyU3BlYyI6IkxaS2txSjNVSTJ2TlZIclIiLCJtYXRlcmlhbFNldFNlcmlhbCI6MX0%3D&branch=melodic-devel"/>](https://eu-west-2.console.aws.amazon.com/codesuite/codebuild/projects/auto_sr_standalone_melodic-devel_code_coverage/)
 
 # Shadow Robot Standalone packages
 This repository contains a wrapper library to hide ROS from the end user.
